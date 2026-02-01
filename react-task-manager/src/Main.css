@@ -1,0 +1,132 @@
+/* Base */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f5f7fb;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  max-width: 480px;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Titles */
+h2 {
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+h3 {
+  margin-top: 24px;
+}
+
+/* Form */
+form {
+  display: flex;
+  gap: 8px;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: #4f46e5;
+}
+
+button {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  background: #4f46e5;
+  color: white;
+}
+
+button:disabled {
+  background: #b7b7f7;
+  cursor: not-allowed;
+}
+
+/* Error */
+.error {
+  color: #dc2626;
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+/* Search */
+.search {
+  margin: 12px 0;
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.filters button {
+  flex: 1;
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.filters button.active {
+  background: #4f46e5;
+  color: white;
+}
+
+/* Task list */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.task-text {
+  cursor: pointer;
+  flex: 1;
+}
+
+.task-text.done {
+  text-decoration: line-through;
+  color: #9ca3af;
+}
+
+.delete-btn {
+  background: transparent;
+  color: #dc2626;
+  font-size: 16px;
+}
+
+/* Empty */
+.empty {
+  text-align: center;
+  color: #6b7280;
+  margin-top: 20px;
+}
