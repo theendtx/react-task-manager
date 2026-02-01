@@ -1,7 +1,7 @@
-import Main from "./main";
+import Main from "./main.jsx";
 
 function App() {
-  return <main />;
+  return <Main />;
 }
 
 export default App;
