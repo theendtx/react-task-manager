@@ -11,25 +11,36 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 import { useState, useEffect } from "react";
 import "./Main.css";
 
+import TaskForm from "./components/TaskForm";
+import TaskList from "./components/TaskList";
+import Filters from "./components/Filters";
+import Search from "./components/Search";
+
 function Main() {
+  // 🔹 INPUT
   const [text, setText] = useState("");
   const [error, setError] = useState("");
 
+  // 🔹 LOADING
   const [loading, setLoading] = useState(false);
   const [loadingApi, setLoadingApi] = useState(false);
 
+  // 🔹 FILTER & SEARCH
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
 
+  // 🔹 TASKS (INIT FROM localStorage)
   const [tasks, setTasks] = useState(() => {
     const saved = localStorage.getItem("tasks");
     return saved ? JSON.parse(saved) : [];
   });
 
+  // 🔹 SAVE TO localStorage
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
+  // 🔹 ADD TASK (ASYNC IMITATION)
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -54,6 +65,7 @@ function Main() {
     }, 1000);
   }
 
+  // 🔹 FETCH TASKS FROM SERVER
   function fetchTasks() {
     setLoadingApi(true);
 
@@ -69,9 +81,12 @@ function Main() {
         setTasks(serverTasks);
         setLoadingApi(false);
       })
-      .catch(() => setLoadingApi(false));
+      .catch(() => {
+        setLoadingApi(false);
+      });
   }
 
+  // 🔹 TOGGLE TASK
   function toggleTask(id) {
     setTasks((prev) =>
       prev.map((task) =>
@@ -82,12 +97,14 @@ function Main() {
     );
   }
 
+  // 🔹 REMOVE TASK
   function removeTask(id) {
     setTasks((prev) =>
       prev.filter((task) => task.id !== id)
     );
   }
 
+  // 🔹 FILTER + SEARCH (DERIVED STATE)
   const visibleTasks = tasks.filter((task) => {
     const matchFilter =
       filter === "all"
@@ -107,23 +124,18 @@ function Main() {
     <main>
       <h2>Task Manager</h2>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Write task..."
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        />
-        <button
-          type="submit"
-          disabled={loading || text.trim() === ""}
-        >
-          {loading ? "Adding..." : "Add"}
-        </button>
-      </form>
+      {/* ADD FORM */}
+      <TaskForm
+        text={text}
+        loading={loading}
+        onChange={(e) => setText(e.target.value)}
+        onSubmit={handleSubmit}
+      />
 
+      {/* ERROR */}
       {error && <p className="error">{error}</p>}
 
+      {/* FETCH */}
       <button onClick={fetchTasks}>
         Load tasks from server
       </button>
@@ -131,53 +143,24 @@ function Main() {
 
       <hr />
 
-      <input
-        className="search"
-        type="text"
-        placeholder="Search..."
+      {/* SEARCH */}
+      <Search
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      <div className="filters">
-        {["all", "active", "done"].map((type) => (
-          <button
-            key={type}
-            onClick={() => setFilter(type)}
-            className={filter === type ? "active" : ""}
-          >
-            {type}
-          </button>
-        ))}
-      </div>
+      {/* FILTERS */}
+      <Filters
+        filter={filter}
+        onSelect={setFilter}
+      />
 
-      {visibleTasks.length === 0 && (
-        <p className="empty">No tasks found</p>
-      )}
-
-      {visibleTasks.length > 0 && (
-        <ul>
-          {visibleTasks.map((task) => (
-            <li key={task.id}>
-              <span
-                className={`task-text ${
-                  task.completed ? "done" : ""
-                }`}
-                onClick={() => toggleTask(task.id)}
-              >
-                {task.text}
-              </span>
-
-              <button
-                className="delete-btn"
-                onClick={() => removeTask(task.id)}
-              >
-                ❌
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
+      {/* LIST */}
+      <TaskList
+        tasks={visibleTasks}
+        onToggle={toggleTask}
+        onRemove={removeTask}
+      />
     </main>
   );
 }
