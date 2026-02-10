@@ -1,7 +1,8 @@
+import { memo } from "react";
 import TaskItem from "./TaskItem";
 
-function TaskList({ tasks, onToggle, onRemove }) {
-  if (tasks.length === 0) {
+const TaskList = memo(function TaskList({ tasks, onToggle, onRemove }) {
+  if (!tasks || tasks.length === 0) {
     return <p className="empty">No tasks found</p>;
   }
 
@@ -17,6 +18,6 @@ function TaskList({ tasks, onToggle, onRemove }) {
       ))}
     </ul>
   );
-}
+});
 
 export default TaskList;

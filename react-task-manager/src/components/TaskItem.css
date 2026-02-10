@@ -1,0 +1,23 @@
+li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.task-text {
+  cursor: pointer;
+  flex: 1;
+}
+
+.task-text.done {
+  text-decoration: line-through;
+  color: #9ca3af;
+}
+
+.delete-btn {
+  background: transparent;
+  color: #dc2626;
+  font-size: 16px;
+}

@@ -1,3 +1,5 @@
+import "./TaskForm.css";
+
 function TaskForm({
   text,
   onChange,

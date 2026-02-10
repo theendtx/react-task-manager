@@ -1,3 +1,5 @@
+import "./TaskItem.css";
+
 function TaskItem({ task, onToggle, onRemove }) {
   return (
     <li>

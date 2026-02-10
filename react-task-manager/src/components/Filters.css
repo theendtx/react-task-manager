@@ -1,0 +1,16 @@
+.filters {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.filters button {
+  flex: 1;
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.filters button.active {
+  background: #4f46e5;
+  color: white;
+}
